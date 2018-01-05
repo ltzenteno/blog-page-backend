@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import config from './models/config';
-import User from './models/user';
+import routes from './routes';
 
 const app = express();
 
@@ -19,9 +19,28 @@ app.use(bodyParser.json());
 // use morgan to log requests to console
 app.use(morgan('dev'));
 
+// API Routes
 
-app.get('/', (requuest, response) => {
+//TODO route to authenticate user
+
+//TODO route middleware to verify token
+
+app.get('/', (request, response) => {
   response.send('hallo!');
 });
+
+
+
+// route to show random message
+routes.get('/', (req, res) => {
+  res.json({
+    message:'This is my API!'
+  });
+});
+
+
+
+
+app.use('/api', routes);
 
 app.listen(port);
