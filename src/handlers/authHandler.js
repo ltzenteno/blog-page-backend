@@ -2,21 +2,21 @@ import jwt from 'jsonwebtoken';
 import User from './../models/user';
 import config from './../models/config';
 
-export const authenticate = (req, res) => {
-  User.findOne({
-    email:req.body.email
-  }, (err, user) => {
-    if(err) throw err;
+export const authenticate = async (req, res) => {
+  let user;
+  try{
+    user = await User.findOne({
+      email:req.body.email
+    });
     if(!user){
-      res.json({
+      res.status(500).send({
         success:false,
         message:'Authentication failed. User not found.'
       });
     } else if(user){
-      //TODO refactor this with async - await
       user.comparePassword(req.body.password, (err, isMatch) => {
         if(err){
-          res.json({
+          res.status(500).send({
             success:false,
             message:err
           });
@@ -46,5 +46,9 @@ export const authenticate = (req, res) => {
         }
       });
     }
-  });
+  }catch(err){
+    res.status(500).send({
+      message:err
+    });
+  }
 };
