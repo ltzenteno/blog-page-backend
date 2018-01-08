@@ -32,10 +32,10 @@ UserSchema.pre('save', function save(next) {
   })
 });
 
-UserSchema.methods.comparePassword = (candidatePassword, callback) => {
-  bcrypt.compare(candidatePassword, UserSchema.path('password').get(field => field), (err, isMatch) => {
+UserSchema.methods.comparePassword = function(candidatePassword, callback) {
+  bcrypt.compare(candidatePassword, this.password,(err, isMatch) => {
     callback(err, isMatch);
-  })
+  });
 };
 
 export default mongoose.model('user', UserSchema);
