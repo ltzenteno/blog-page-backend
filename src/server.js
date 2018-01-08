@@ -20,7 +20,6 @@ app.use(morgan('dev'));
 
 // API Routes
 
-//TODO route to authenticate user
 
 //TODO route middleware to verify token
 
