@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import User from './../models/user';
-import config from './../models/config';
 
 export const authenticate = async (req, res) => {
   let user;
@@ -33,7 +32,7 @@ export const authenticate = async (req, res) => {
             data:user.email
           };
 
-          const token = jwt.sign(payload, config.secret, {
+          const token = jwt.sign(payload, process.env.SECRET, {
             expiresIn: '24h' //expires in 24 hrs
           });
 

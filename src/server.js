@@ -2,14 +2,14 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import config from './models/config';
 import routes from './routes';
+import env from 'dotenv';
 
+env.config();
 const app = express();
 
 const port = process.env.PORT || 8080;
-mongoose.connect(config.database);
-app.set('superSecret', config.secret);
+mongoose.connect(process.env.DB);
 
 // use body parser so we can get info from POST and / or URL parameters
 app.use(bodyParser.urlencoded({extended:true}));
@@ -19,15 +19,9 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 // API Routes
-
-
-//TODO route middleware to verify token
-
 app.get('/', (request, response) => {
   response.send('hallo!');
 });
-
-
 
 // route to show random message
 routes.get('/', (req, res) => {
@@ -35,9 +29,6 @@ routes.get('/', (req, res) => {
     message:'This is my API!'
   });
 });
-
-
-
 
 app.use('/api', routes);
 
