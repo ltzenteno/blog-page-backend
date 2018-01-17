@@ -28,7 +28,7 @@ describe('Page', () => {
     const page = new Page({
       title:'My Foo Page!',
       slug:'my-foo-page',
-      content:'{}'
+      content:{p:'lorem ipsum...'}
     });
     page.save(done);
   });

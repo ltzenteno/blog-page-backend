@@ -6,11 +6,11 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const PageSchema = new Schema({
-  title:String,
-  slug:String,
-  content:String,
-  mainMedia:String,
-  publishedAt:Date
+  title:{type:String, required:true},
+  slug:{type:String, required:true},
+  content:{type:Object, required:true},
+  mainMedia:{type:Object, required:false},
+  publishedAt:{type:Date, required:false}
 },{
   timestamps:true
 });
