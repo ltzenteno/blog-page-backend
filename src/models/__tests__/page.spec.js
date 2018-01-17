@@ -1,39 +1,35 @@
+import env from 'dotenv';
 import {expect} from 'chai';
 import Page from './../page';
 import mongoose from 'mongoose';
 
-
-async function add(x, y){
-   return Promise.resolve(x + y);
-}
+env.config();
 
 describe('Page', () => {
 
-  it('2 + 2 is 4', async () => {
-    const p = await add(2, 2)
-    expect(p).to.equal(4);
+  // before starting the test, create a sandboxed db connection
+  // once a connection is established, invoke done()
+  before(done => {
+    mongoose.connect(process.env.DB);
+    const db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error'));
+    db.once('open', () => {
+      console.log('test connected to db');
+      done();
+    });
   });
 
-  it('3 + 3 is 6', async () => {
-    const p = await add(3, 3)
-    expect(p).to.equal(6);
+  // after all tests are finished, close database connection
+  after(done => {
+    mongoose.connection.close(done);
   });
 
-  /*
-  it('should save a page', async () => {
-    const page = {
+  it('should save a page', done => {
+    const page = new Page({
       title:'My Foo Page!',
       slug:'my-foo-page',
       content:'{}'
-    };
-    let model;
-
-    try{
-      model = await Page.create(page);
-      expect(model).to.be.a('object');
-    }catch(err){
-      console.log(err);
-    }
+    });
+    page.save(done);
   });
-  */
 });
