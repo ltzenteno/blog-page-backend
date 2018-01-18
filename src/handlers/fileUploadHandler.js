@@ -13,7 +13,7 @@ export const uploadFile = async (req, res, next) => {
   }else{
 
     const image = new Image({
-      name:req.file.filename
+      name:req.file.key
     });
 
     try{
