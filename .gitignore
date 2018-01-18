@@ -1,2 +1,5 @@
 node_modules
 .idea/
+
+# ignore temporal local dir for file uploads
+uploads/
