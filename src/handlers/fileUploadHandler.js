@@ -1,19 +1,17 @@
 export const uploadFile = (req, res, next) => {
-  // req.file:
-  /* example output:
-            { fieldname: 'image',
-              originalname: 'grumpy.png',
-              encoding: '7bit',
-              mimetype: 'image/png',
-              destination: './uploads/',
-              filename: '436ec561793aa4dc475a88e84776b1b9',
-              path: 'uploads/436ec561793aa4dc475a88e84776b1b9',
-              size: 277056 }
-	 */
+  // TODO: delete this console.log
   for(let key in req.file){
     console.log(`${key} : ${req.file[key]}`);
   }
-  res.json({
-    message:'success'
-  });
+
+  if(req.file === undefined) {
+    res.status(400).send({
+      message: 'file not supported, you can only upload JPG, GIF or PNG files.'
+    });
+  }else{
+    res.json({
+      message:'file uploaded successfully.',
+      name:req.file.filename
+    });
+  }
 };
