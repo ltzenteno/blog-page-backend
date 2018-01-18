@@ -1,4 +1,6 @@
-export const uploadFile = (req, res, next) => {
+import Image from './../models/image';
+
+export const uploadFile = async (req, res, next) => {
   // TODO: delete this console.log
   for(let key in req.file){
     console.log(`${key} : ${req.file[key]}`);
@@ -9,9 +11,24 @@ export const uploadFile = (req, res, next) => {
       message: 'file not supported, you can only upload JPG, GIF or PNG files.'
     });
   }else{
-    res.json({
-      message:'file uploaded successfully.',
+
+    const image = new Image({
       name:req.file.filename
     });
+
+    try{
+      const data = await image.save();
+      res.json({
+        message:'file uploaded successfully.',
+        name:data.name
+      });
+    }catch(err){
+      res.status(500).send({
+        message:err
+      });
+    }
+
+
+
   }
 };
