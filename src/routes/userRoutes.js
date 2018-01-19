@@ -1,5 +1,5 @@
 import express from 'express';
-import verifyToken from './middleware';
+import verifyToken from './middleware/jwt';
 import {
   fetchUsers
 } from '../handlers/userHandler';

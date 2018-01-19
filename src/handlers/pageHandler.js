@@ -53,6 +53,7 @@ export const createSlug = async (req, res) => {
   const {text} = req.body;
   const slug = slugify(text);
 
+  // TODO: check if slug doesn't exist, if so, add a number at the end of the slug
   res.json({
     message:'Text slugified.',
     slug
