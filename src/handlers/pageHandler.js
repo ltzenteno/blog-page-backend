@@ -4,7 +4,15 @@ import {tryParseJSON} from './../util/helpers';
 export const createPage = async (req, res) => {
   const { title, slug, content, mainMedia, publishedAt } = req.body;
 
-  // TODO: validate that the slug does not exist already
+  // validate that the slug does not exist already
+  const repeatedSlug = await Page.findOne({slug});
+  if(repeatedSlug){
+    res.status(400).send({
+      message:'The provided slug already exists.',
+      slug
+    });
+    return;
+  }
 
   const jsonContent = tryParseJSON(content);
   const jsonMainMedia = tryParseJSON(mainMedia);
