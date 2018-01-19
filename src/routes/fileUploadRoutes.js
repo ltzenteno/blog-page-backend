@@ -17,7 +17,7 @@ const routes = express.Router();
 aws.config.update({
   accessKeyId:process.env.AWS_ACCESS_KEY,
   secretAccessKey:process.env.AWS_SECRET_KEY
-})
+});
 // S3 connection implementation
 const s3 = new aws.S3();
 const bucket = process.env.AWS_S3_BUCKET;
