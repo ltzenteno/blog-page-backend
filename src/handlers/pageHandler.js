@@ -1,5 +1,8 @@
 import Page from './../models/page';
-import {tryParseJSON} from './../util/helpers';
+import {
+  slugify,
+  tryParseJSON
+} from './../util/helpers';
 
 export const createPage = async (req, res) => {
   const { title, slug, content, mainMedia, publishedAt } = req.body;
@@ -44,4 +47,14 @@ export const createPage = async (req, res) => {
       message:err
     });
   }
+};
+
+export const createSlug = async (req, res) => {
+  const {text} = req.body;
+  const slug = slugify(text);
+
+  res.json({
+    message:'Text slugified.',
+    slug
+  });
 };
